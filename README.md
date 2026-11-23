@@ -82,7 +82,7 @@
 
 ### 方式一：直接运行（推荐）
 
-1. 到 [Releases](../../releases) 下载最新的 `墨香密码管理器_vX.X.X.zip`。
+1. 到 [Releases](../../releases) 下载最新的 `MoxiangPasswordManager_vX.X.X.zip`（如 v2.4.0）。也可直接下载 [v2.4.0 压缩包](https://github.com/phantomxjc/account_manager/releases/download/v2.4.0/MoxiangPasswordManager_v2.4.0.zip)。
 2. 解压到一个文件夹（建议固定目录，如 `D:\墨香密码管理器`）。
 3. 双击 `墨香密码管理器.exe`，首次使用先「注册」创建主密码。
 
