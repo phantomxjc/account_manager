@@ -1481,3 +1481,79 @@ class ShareDialog(QDialog):
 
         # 显示复制成功提示
         QMessageBox.information(self, "复制成功", "分享内容已复制到剪贴板！")
+
+
+class AboutDialog(QDialog):
+    """「关于」对话框：介绍软件、版本、作者与特性。只读展示，不涉及任何用户数据。"""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        from moxiang import __version__
+        self.setWindowTitle("关于 墨香密码管理器")
+        self.setFixedSize(480, 520)
+        self.setWindowIcon(get_app_icon())
+        self.setStyleSheet("QDialog { background: #FBF7F0; font-family: 'Microsoft YaHei'; }")
+
+        layout = QVBoxLayout(self)
+        layout.setSpacing(9)
+        layout.setContentsMargins(22, 16, 22, 20)
+        ChineseStyle.add_dialog_accent(self)
+
+        title = QLabel("关于 墨香密码管理器")
+        ChineseStyle.set_dialog_title(title)
+        layout.addWidget(title)
+        layout.addWidget(ChineseStyle.make_subtitle("一款本地优先、中国风的账号密码管理工具"))
+
+        # 主体徽标区
+        badge = QLabel("墨  香")
+        badge.setAlignment(Qt.AlignCenter)
+        badge.setStyleSheet("""
+            QLabel {
+                font-size: 40px; font-weight: bold; color: #A64D37;
+                font-family: 'Microsoft YaHei'; padding: 10px;
+                background: qlineargradient(x1:0,y1:0,x2:1,y2:1,
+                            stop:0 #F8F4E9, stop:1 #EFE6D5);
+                border: 1px solid #D9C7A7; border-radius: 12px;
+            }
+        """)
+        layout.addWidget(badge)
+
+        version = QLabel(f"版本 v{__version__}")
+        version.setAlignment(Qt.AlignCenter)
+        version.setStyleSheet("font-size: 12px; color: #8C7853; font-family: 'Microsoft YaHei';")
+        layout.addWidget(version)
+
+        intro = QLabel(
+            "墨香是一款完全本地运行的密码管理器。你的所有账号与密码均使用主密码派生密钥\n"
+            "并经 AES-GCM 加密后保存在本机，不上传云端、不联网传输。"
+        )
+        intro.setWordWrap(True)
+        intro.setStyleSheet("""
+            QLabel { background: #F3E8DA; border-left: 3px solid #A64D37; border-radius: 4px;
+                     padding: 8px 10px; font-size: 12px; color: #7A5C3A;
+                     font-family: 'Microsoft YaHei'; }
+        """)
+        layout.addWidget(intro)
+
+        features = QLabel(
+            "• 主密码 + PBKDF2 + AES-GCM 加密存储\n"
+            "• 单位表 / 个人表双库，支持自定义工作表与记录互迁\n"
+            "• 网络类型标注与网站可达性核实\n"
+            "• Excel / CSV 导入导出、强密码生成、空闲自动锁定\n"
+            "• 系统托盘、中国风界面、功能栏可自定义排序"
+        )
+        features.setStyleSheet("font-size: 12px; color: #5A4632; font-family: 'Microsoft YaHei'; line-height: 150%;")
+        layout.addWidget(features)
+
+        author = QLabel("作者：软件推手 / phantomxjc")
+        author.setAlignment(Qt.AlignCenter)
+        author.setStyleSheet("font-size: 13px; font-weight: bold; color: #654321; font-family: 'Microsoft YaHei'; padding-top: 6px;")
+        layout.addWidget(author)
+
+        layout.addStretch()
+        ok_btn = ChineseStyle.primary_button("知道了", 100, 34)
+        btn_row = QHBoxLayout()
+        btn_row.addStretch()
+        btn_row.addWidget(ok_btn)
+        btn_row.addStretch()
+        layout.addLayout(btn_row)
+        ok_btn.clicked.connect(self.accept)

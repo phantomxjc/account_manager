@@ -24,7 +24,8 @@ from ..icon import get_app_icon
 from ..netcheck import verify_website, detect_network_type
 from ..ui.dialogs import (SecurityDialog, ChangePasswordDialog, RecordDialog,
                           ExcelImportDialog, ShareDialog, ExportDialog,
-                          IdleSettingsDialog, NetworkTypeManagerDialog, CardItemDelegate)
+                          IdleSettingsDialog, NetworkTypeManagerDialog, CardItemDelegate,
+                          AboutDialog)
 
 
 # 功能栏按钮元数据：key -> (显示名, 点击槽函数名, 渐变色1, 渐变色2)
@@ -524,6 +525,7 @@ class MainWindow(QMainWindow):
         toolbar_order_action = QAction("🔀 功能栏排序", self)
         new_table_action = QAction("🗂 新建工作表", self)
         del_table_action = QAction("🗑 删除工作表（仅自定义表）", self)
+        about_action = QAction("ℹ 关于墨香", self)
         logout_action = QAction("🚪 注销账号", self)
 
         menu.addAction(backup_action)
@@ -536,6 +538,7 @@ class MainWindow(QMainWindow):
         menu.addAction(new_table_action)
         menu.addAction(del_table_action)
         menu.addSeparator()
+        menu.addAction(about_action)
         menu.addAction(logout_action)
 
         backup_action.triggered.connect(self.manual_backup)
@@ -545,9 +548,14 @@ class MainWindow(QMainWindow):
         toolbar_order_action.triggered.connect(self.open_toolbar_order)
         new_table_action.triggered.connect(self.create_table_ui)
         del_table_action.triggered.connect(self.delete_table_ui)
+        about_action.triggered.connect(self.open_about)
         logout_action.triggered.connect(self.logout)
 
         menu.exec_(self.user_info_label.mapToGlobal(pos))
+
+    def open_about(self):
+        """打开「关于」对话框（软件介绍 / 版本 / 作者）"""
+        AboutDialog(self).exec_()
 
     def create_table_ui(self):
         """新建自定义工作表"""
